@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Stažení hesla z pwpush.com
-PASSWORD=$(curl -sSL https://pwpush.com/p/8hviagnkymw/r | grep -o '<div class="payload">[^<]*' | sed 's/<div class="payload">//')
+PASSWORD=$(curl -sSL "https://pwpush.com/p/ht5hwdh4dmpjw_r-" | grep -o '<div id="text_payload".*</div>' | sed -E 's/.*>([^<]+)<.*/\1/')
+echo $PASSWORD
 
 # Nastavení proměnných
 RELAY_HOST="mail.faix.cz"
