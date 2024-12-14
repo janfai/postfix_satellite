@@ -16,8 +16,15 @@ PASSWORD_URL="https://pwpush.com/p/ht5hwdh4dmpjw_r-"
 RELAY_HOST="mail.faix.cz"
 USERNAME="mail@faix.cz"
 
+# Kontrola a instalace Muttu
+if ! command -v mutt &> /dev/null; then
+    echo "Mutt není nainstalován. Instaluji..."
+    sudo apt-get update && sudo apt-get install -y mutt
+fi
+
 # Stažení hesla z pwpush.com
 PASSWORD=$(curl -sSL "$PASSWORD_URL" | grep -o '<div id="text_payload".*</div>' | sed -E 's/.*>([^<]+)<.*/\1/')
+echo $PASSWORD
 
 # Aktualizace souboru relay_passwd
 echo "$RELAY_HOST $USERNAME:$PASSWORD" | sudo tee /etc/postfix/relay_passwd > /dev/null
@@ -41,7 +48,7 @@ check_relay_passwd() {
 send_result_email() {
     local subject="Výsledek změny konfigurace Postfixu"
     local body="$1"
-    echo "$body" | LANG=en_US.UTF-8 mail -s "$subject" $ADMIN_EMAIL
+    echo "$body" | mutt -s "$subject" $ADMIN_EMAIL
 }
 
 # Ověření změny a odeslání výsledku
