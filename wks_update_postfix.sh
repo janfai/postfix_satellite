@@ -8,7 +8,7 @@
 # Použití: Tento skript lze stáhnout a spustit jedním příkazem:
 #   curl -sSL https://raw.githubusercontent.com/janfai/postfix_satellite/main/wks_update_postfix.sh | sudo bash
 #
-# Poznámka: Ujistěte se, že máte nainstalovaný curl a spouštíte příkaz s právy sudo.
+# Poznámka: Ujistěte se, že spouštíte příkaz s právy sudo.
 
 # Nastavení proměnných
 ADMIN_EMAIL="jan@faix.cz"
@@ -16,11 +16,13 @@ PASSWORD_URL="https://pwpush.com/p/afj1iqtipss"
 RELAY_HOST="mail.faix.cz"
 USERNAME="mail@faix.cz"
 
-# Kontrola a instalace Muttu
-if ! command -v mutt &> /dev/null; then
-    echo "Mutt není nainstalován. Instaluji..."
-    sudo apt-get update && sudo apt-get install -y mutt
-fi
+# Kontrola a instalace curl a mutt
+for cmd in curl mutt; do
+    if ! command -v $cmd &> /dev/null; then
+        echo "$cmd není nainstalován. Instaluji..."
+        sudo apt-get update && sudo apt-get install -y $cmd
+    fi
+done
 
 # Stažení hesla z pwpush.com
 PASSWORD=$(curl -sSL "$PASSWORD_URL" | grep -o '<div id="text_payload".*</div>' | sed -E 's/.*>([^<]+)<.*/\1/')
