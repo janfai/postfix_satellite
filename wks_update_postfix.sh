@@ -41,7 +41,7 @@ check_relay_passwd() {
 send_result_email() {
     local subject="Výsledek změny konfigurace Postfixu"
     local body="$1"
-    echo "$body" | mail -s "$subject" $ADMIN_EMAIL
+    echo "$body" | LANG=en_US.UTF-8 mail -s "$subject" $ADMIN_EMAIL
 }
 
 # Ověření změny a odeslání výsledku
