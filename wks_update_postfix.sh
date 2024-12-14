@@ -12,7 +12,7 @@
 
 # Nastavení proměnných
 ADMIN_EMAIL="jan@faix.cz"
-PASSWORD_URL="https://pwpush.com/p/ht5hwdh4dmpjw_r-"
+PASSWORD_URL="https://pwpush.com/p/afj1iqtipss"
 RELAY_HOST="mail.faix.cz"
 USERNAME="mail@faix.cz"
 
